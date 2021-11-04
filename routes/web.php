@@ -23,4 +23,6 @@ Route::prefix('admin')->group(function() {
     Route::any('/', [AuthController::class, 'login']);
     Route::any('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::any('/dashboard/users', [AdminController::class, 'displayUsers'])->name('display.users');
+    Route::any('/dashboard/user/edit/{id}', [AdminController::class, 'editUsers'])->name('edit.user');
+    Route::any('/dashboard/user/delete/{id}', [AdminController::class, 'delete'])->name('delete');
 });

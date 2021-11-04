@@ -27,21 +27,34 @@ class AdminController extends Controller
         ]);
     }
 
-//    public function editUsers (Request $request){
-//        $user = User::whereId($request->id)->first();
-//        $status = "";
-//
-//        if(isset($request->name)){
-//            $user->name = $request->name;
-//            $user->save();
-//            $status = "Record $user->id updated";
-//            return redirect('company/edit/' . $company->id)
-//                ->with('status', $status);
-//        }
-//
-//        return view('company.edit', [
-//                "company" => $company
-//            ]
-//        )->with("status", $status);
-//    }
+    public function editUsers (Request $request){
+        $user = User::whereId($request->id)->first();
+        $status = "";
+
+        if(isset($request->name) || isset($request->email)){
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->save();
+            $status = "Record $user->id updated";
+            return redirect('admin/dashboard/user/edit/' . $user->id)
+                ->with('status', $status);
+        }
+
+        return view('dashboard.edit', [
+                "user" => $user
+            ]
+        )->with("status", $status);
+    }
+
+    public function delete (Request $request){
+        $user = User::whereId($request->id)->first();
+        $status = "";
+
+        if(isset($request->id)){
+            $user->delete();
+            $status = "Record $user->id deleted";
+            return redirect('admin/dashboard/users')
+                ->with('status', $status);
+        }
+    }
 }
